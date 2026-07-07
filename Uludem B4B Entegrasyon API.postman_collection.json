@@ -1,0 +1,854 @@
+{
+  "info": {
+    "_postman_id": "a1120fb0-c05a-44a6-b61d-4e814f26990e",
+    "name": "Uludem B4B Entegrasyon API",
+    "description": "B4B ERP entegrasyon API'si. OAuth 2.0 Client Credentials ile JWT alınır; `Authorization: Bearer <token>` ile uçlar çağrılır.\n\n## Kimlik doğrulama (deny-by-default)\nYalnız `OAuth` uçları (token üretme) açıktır; api altındaki DİĞER TÜM uçlar geçerli Bearer token + izinli IP + ilgili scope ister.\n\n## Kullanım\n1) `OAuth / Token al` isteğini çalıştır — dönen `access_token` otomatik olarak `{{access_token}}` değişkenine yazılır.\n2) Diğer istekler `{{access_token}}`'ı Bearer header'da kullanır.\n\n## Çoklu dil\nMesajlar (hata/başarı) `Accept-Language` header'ı veya `?lang=` query param ile dile göre döner. Desteklenen: `tr`, `en` (varsayılan `tr`). Koleksiyon değişkeni: `{{lang}}`.\n\n## Scope kataloğu\nsiparis:liste|detay|aktar|sil · odeme:liste|detay|aktar|sil · tahsilat:liste|detay|aktar|sil · urun:liste|detay|ekle|topluEkle|grup · fatura:yukle|sil\n\nÜretilen her token `main.tb_api_token`'a IP+scope ile kaydedilir; iptal (revoke) ile `iptal=true` işaretlenir.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "6959604",
+    "_collection_link": "https://go.postman.co/collection/2614804-a1120fb0-c05a-44a6-b61d-4e814f26990e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "OAuth",
+      "item": [
+        {
+          "name": "Token al (client_credentials)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var d = pm.response.json();",
+                  "if (d && d.data && d.data.access_token) {",
+                  "  pm.collectionVariables.set('access_token', d.data.access_token);",
+                  "  console.log('access_token kaydedildi.');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"client_credentials\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\": \"{{client_secret}}\",\n  \"scope\": \"siparis:liste siparis:detay\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/oauth/token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "oauth",
+                "token"
+              ]
+            },
+            "description": "client_credentials akışı. `scope` opsiyonel (boşsa istemcinin tüm izinleri). Yanıt: access_token (Bearer), token_type, expires_in, scope, jti. Üretilen token main.tb_api_token'a IP+scope ile kaydedilir. (Bu uç auth'tan MUAF.)"
+          },
+          "response": []
+        },
+        {
+          "name": "Revoke (token iptal)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/oauth/revoke",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "oauth",
+                "revoke"
+              ]
+            },
+            "description": "Bearer token'ı iptal eder (jti iptal=true). Sonraki kullanım 401 döner."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sipariş",
+      "item": [
+        {
+          "name": "Liste",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isAktarim\": 2,\n  \"sayfa\": 1,\n  \"sayfaLimit\": 20\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/siparis/index",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "siparis",
+                "index"
+              ]
+            },
+            "description": "scope: siparis:liste. Filtreler: kelime, isOnay(1/2), durum, musteriId, plasiyerId, isAktarim(1=aktarılan, 2=aktarılmayan), fisTarihBaslangic, fisTarihBitis, isB4b. Yanıt: liste + meta (toplamVeri/sayfa/sayfaLimit/toplamSayfa)."
+          },
+          "response": []
+        },
+        {
+          "name": "Detay",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1234\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/siparis/detay",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "siparis",
+                "detay"
+              ]
+            },
+            "description": "scope: siparis:detay. id veya kod (id öncelikli; ikisi de yoksa 400, bulunamazsa 404). Yanıt: başlık + hareketler + dosyalar."
+          },
+          "response": []
+        },
+        {
+          "name": "Aktar (ERP'ye işaretle)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1234,\n  \"erpId\": \"LG-0001\",\n  \"hareketler\": [ { \"id\": 9, \"erpId\": \"LGL-9\" } ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/siparis/aktar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "siparis",
+                "aktar"
+              ]
+            },
+            "description": "scope: siparis:aktar. isAktarim=true, aktarimTarih ve (sipariş + kalem) erpId yazar."
+          },
+          "response": []
+        },
+        {
+          "name": "Sil",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1234,\n  \"force\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/siparis/sil",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "siparis",
+                "sil"
+              ]
+            },
+            "description": "scope: siparis:sil. Aktarılmış kayıt (isAktarim=true) varsayılan silinmez → 409; force=true ile silinir."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ödeme",
+      "item": [
+        {
+          "name": "Liste",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isAktarim\": 2,\n  \"sayfa\": 1,\n  \"sayfaLimit\": 20\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/odeme/index",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "odeme",
+                "index"
+              ]
+            },
+            "description": "scope: odeme:liste. Filtreler: kelime, durum(1/2), musteriId, plasiyerId, sanalposId, isAktarim, olusturmaTarihBaslangic/Bitis."
+          },
+          "response": []
+        },
+        {
+          "name": "Detay",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 555\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/odeme/detay",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "odeme",
+                "detay"
+              ]
+            },
+            "description": "scope: odeme:detay. id veya kod. tumVeri (gateway yanıtı) dahil."
+          },
+          "response": []
+        },
+        {
+          "name": "Aktar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 555,\n  \"aktarimTip\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/odeme/aktar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "odeme",
+                "aktar"
+              ]
+            },
+            "description": "scope: odeme:aktar. isAktarim=true, aktarimTarih (+ops. aktarimTip)."
+          },
+          "response": []
+        },
+        {
+          "name": "Sil",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 555,\n  \"force\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/odeme/sil",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "odeme",
+                "sil"
+              ]
+            },
+            "description": "scope: odeme:sil. Aktarılmış kayıt varsayılan silinmez → 409; force=true ile silinir."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tahsilat",
+      "item": [
+        {
+          "name": "Liste",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isAktarim\": 2,\n  \"sayfa\": 1,\n  \"sayfaLimit\": 20\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tahsilat/index",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tahsilat",
+                "index"
+              ]
+            },
+            "description": "scope: tahsilat:liste. Filtreler: kelime, musteriId, tipId(nakit/çek), plasiyerId, isAktarim, olusturmaTarihBaslangic/Bitis."
+          },
+          "response": []
+        },
+        {
+          "name": "Detay",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 777\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tahsilat/detay",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tahsilat",
+                "detay"
+              ]
+            },
+            "description": "scope: tahsilat:detay. id veya kod. Kasa/banka, çek alanları, karşı cari."
+          },
+          "response": []
+        },
+        {
+          "name": "Aktar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 777\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tahsilat/aktar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tahsilat",
+                "aktar"
+              ]
+            },
+            "description": "scope: tahsilat:aktar. isAktarim=true, aktarimTarih."
+          },
+          "response": []
+        },
+        {
+          "name": "Sil",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 777,\n  \"force\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tahsilat/sil",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tahsilat",
+                "sil"
+              ]
+            },
+            "description": "scope: tahsilat:sil. Aktarılmış kayıt varsayılan silinmez → 409; force=true ile silinir."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ürün",
+      "item": [
+        {
+          "name": "Liste",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kelime\": \"\",\n  \"markaId\": 0,\n  \"sayfa\": 1,\n  \"sayfaLimit\": 50\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/urun/index",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "urun",
+                "index"
+              ]
+            },
+            "description": "scope: urun:liste. Fiyat, istemciye bağlı müşteriye göre hesaplanır (istemcide musteriId tanımlı olmalı, yoksa 400). Yanıt alanları: id, kod, baslik, baslikDil, aciklama, marka, model, grup, altGrup, grupDetay, mevsim, uretimYil, tabanGenislik, yanak, jantCap, yukEndeks, hizEndeks, yakitVerimlilik, sesSeviyesi, islakZeminFren, cinsiyet, isXl, isRunFlat, isYerli, isYeni, isMuadil, isVaryant, varyantList, tedarikSure, koliIci, rafOmru, gtinKod, ureticiKod, oemList, resimList, birim, barkod, kdv, kalanMiktar, genelDepo, isKampanya, kampanyaIdList, listeFiyat, listeFiyatKdvsiz, iskonto, iskontoTutar, satisFiyat, satisFiyatKdvsiz. İstemci ayar.kolonList doluysa yanıt yalnız o kolonlarla döner (id + baslikDil daima). Okuma cache'li (varsayılan 30 dk)."
+          },
+          "response": []
+        },
+        {
+          "name": "Detay",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kod\": \"yk_yekhonanbz\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/urun/detay",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "urun",
+                "detay"
+              ]
+            },
+            "description": "scope: urun:detay. id veya kod. Zengin detay: baslik/aciklama dil çevirileri, kdv, birim/birim2/birim3, marka/model/grup, lastik özellikleri, kategoriler, oemList, resimler, depoList, fiyatList. kolonList beyaz listesi uygulanır. Okuma cache'li."
+          },
+          "response": []
+        },
+        {
+          "name": "Ekle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kod\": \"YENI-URUN-001\",\n  \"tipId\": 1,\n  \"baslik\": \"Örnek Ürün\",\n  \"birim\": \"Adet\",\n  \"kdv\": \"%20\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/urun/ekle",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "urun",
+                "ekle"
+              ]
+            },
+            "description": "scope: urun:ekle. Upsert (kod ile). Yeni kayıtta tipId, baslik, birim, kdv zorunlu. Grup/marka/model bulunamazsa oluşturulur. ERP yönetimindeki (isErp=true) alanlar korunur."
+          },
+          "response": []
+        },
+        {
+          "name": "Toplu Ekle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"urunler\": [\n    { \"kod\": \"YENI-001\", \"tipId\": 1, \"baslik\": \"Ürün 1\", \"birim\": \"Adet\", \"kdv\": \"%20\" },\n    { \"kod\": \"YENI-002\", \"tipId\": 1, \"baslik\": \"Ürün 2\", \"birim\": \"Adet\", \"kdv\": \"%20\" }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/urun/topluEkle",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "urun",
+                "topluEkle"
+              ]
+            },
+            "description": "scope: urun:topluEkle. İstek başına azami kalem = istemci ayar.topluEkleLimit (aşılırsa 422)."
+          },
+          "response": []
+        },
+        {
+          "name": "Grup listesi",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/urun/grup/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "urun",
+                "grup",
+                "1"
+              ]
+            },
+            "description": "scope: urun:grup. Yol parametresi TipId (ör. marka/model/grup tip id). Aktif gruplar: id, baslik, tipId, ustId, dilCeviri, ustBaslik, tipBaslik."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Fatura",
+      "item": [
+        {
+          "name": "Yükle (dosya)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"faturaId\": 123,\n  \"ext\": \"pdf\",\n  \"uuId\": \"\",\n  \"content\": \"data:application/pdf;base64,JVBERi0xLjQK...\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/fatura/yukle",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "fatura",
+                "yukle"
+              ]
+            },
+            "description": "scope: fatura:yukle. Fatura hareketine dosya (jpeg/jpg/png/pdf) bağlar. content = base64 (data URI). uuId opsiyonel (verilmezse üretilir). Entegrasyon aktif değilse 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Sil (dosya)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/fatura/sil/123",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "fatura",
+                "sil",
+                "123"
+              ]
+            },
+            "description": "scope: fatura:sil. Yol parametresi FaturaId. Fatura hareketindeki dosyayı (faturaUrl) ve diskteki dosyayı siler."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://b4bapi.uludem.com.tr"
+    },
+    {
+      "key": "client_id",
+      "value": "logo-sync"
+    },
+    {
+      "key": "client_secret",
+      "value": "DEGISTIR-uzun-secret-123"
+    },
+    {
+      "key": "lang",
+      "value": "tr"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    }
+  ]
+}
