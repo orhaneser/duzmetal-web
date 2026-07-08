@@ -95,14 +95,14 @@ const fallbackProducts: ProductCardItem[] = [
     icon: Factory,
   },
   {
-    title: 'Soudal Sızdırmazlık Sistemleri',
-    description: 'Soudal silikon ve poliüretan sızdırmazlık ürünlerinde hava, su ve termal yalıtımda profesyonel çözümler ve teknik destek.',
+    title: 'Tytan Sızdırmazlık Sistemleri',
+    description: 'Tytan silikon ve poliüretan sızdırmazlık ürünlerinde hava, su ve termal yalıtımda profesyonel çözümler ve teknik destek.',
     image: '/images/katalog-2.jpg',
     icon: Building2,
   },
   {
-    title: 'Endüstriyel Tedarik Çözümleri',
-    description: 'Soudal ve partner markaları yapı kimyası ürünlerinin profesyonel depo yönetimi, stok desteği ve garantili teslimat sunumu.',
+    title: 'Selsil Tedarik Çözümleri',
+    description: 'Selsil yapı kimyası ürünlerinin profesyonel depo yönetimi, stok desteği ve garantili teslimat sunumu.',
     image: '/images/katalog-3.jpg',
     icon: PackageCheck,
   },
@@ -252,7 +252,7 @@ function App() {
             <div className="max-w-3xl">
               <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: 'easeOut' }}>
                 <h1 className="text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-white sm:text-6xl lg:text-[4.4rem]">Güvenilir dağıtım, güçlü marka temsilciliği.</h1>
-                <p className="mt-7 max-w-2xl text-lg leading-8 text-white/90 sm:text-xl">Soudal başta olmak üzere Aktix, Apel, Selsil, Tekno ve Tytan gibi markaların ürünlerini; güçlü stok, toptan satış ve teknik destek anlayışıyla müşterilerimize sunuyoruz.</p>
+                <p className="mt-7 max-w-2xl text-lg leading-8 text-white/90 sm:text-xl">Soudal ve diğer seçkin markalarla ürünlerini; güçlü stok, toptan satış ve teknik destek anlayışıyla müşterilerimize sunuyoruz.</p>
                 <div className="mt-9 flex flex-wrap gap-3">
                   <button type="button" onClick={() => handlePageChange('contact')} className="rounded-full bg-[#b51e1e] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_12px_34px_rgba(181,30,30,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#a51818]">İletişime Geç</button>
                   <button type="button" onClick={() => setCurrentPage('catalog')} className="rounded-full border border-stone-400/70 bg-white/85 px-7 py-3.5 text-sm font-semibold text-stone-800 shadow-[0_10px_30px_rgba(0,0,0,0.08)] transition duration-300 hover:-translate-y-0.5 hover:bg-white">Ürünleri İncele</button>
@@ -281,7 +281,7 @@ function App() {
             <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Soudal Ürün Portföyü</p>
-                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-stone-900">Soudal ve partner markaları ürünlerini katalog sayfasında profesyonel düzenle inceleyebilirsiniz.</h3>
+                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-stone-900">Ürün portföyümüzü katalog sayfasında profesyonel düzenle inceleyebilirsiniz.</h3>
               </div>
               <button type="button" onClick={() => setCurrentPage('catalog')} className="inline-flex items-center justify-center rounded-full bg-[#b51e1e] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#a51818]">
                 Katalog sayfasına git
@@ -327,7 +327,7 @@ function App() {
           </div>
         </Section>
 
-        <Section id="hakkimizda" eyebrow="Soudal Distribütörü Düz Metal Hakkında" title="Soudal ve partner markaların yapı kimyası ürünlerinde güvenilir tedarik ortağı." description="Düz Metal olarak, yapı ve imalat operasyonlarının ihtiyaçlarını karşılayabilmek için ileri düzey stok yönetimi, güvenli taşıma yapısı ve teknik ekip desteği ile çalışmaktayız.">
+        <Section id="hakkimizda" eyebrow="Soudal Distribütörü Düz Metal Hakkında" title="İHTİYACINIZA UYGUN TÜM İZOLASYON GRUBU ÜRÜNLERİ İLE HİZMETİNİZDEYİZ" description="Düz Metal olarak, yapı ve imalat operasyonlarının ihtiyaçlarını karşılayabilmek için ileri düzey stok yönetimi, güvenli taşıma yapısı ve teknik ekip desteği ile çalışmaktayız.">
           <div className="grid gap-8 lg:grid-cols-[0.94fr_1.06fr]">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white min-h-[400px] md:min-h-[500px]">
               <ImageSlider 
@@ -358,14 +358,14 @@ function App() {
             </div>
             <div className="grid gap-8 bg-white/90 p-8 sm:p-10 lg:p-12 content-start">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Soudal Distribütörü - Dağıtım ve Lojistik</p>
-                <h3 className="mt-4 text-3xl font-semibold tracking-tight text-stone-900">Soudal depo kapasitesi, stok güveni ve hızlı teslimat.</h3>
-                <p className="mt-4 max-w-2xl text-lg leading-8 text-stone-600">Büyüyen Soudal ve yapı kimyası tedarik ihtiyaçlarına cevap verebilmek için depo organizasyonunu, stok takibini ve sevkiyat akışını güçlü bir altyapı ile destekliyoruz.</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Tekno Endüstriyel Koruma Çözümleri</p>
+                <h3 className="mt-4 text-3xl font-semibold tracking-tight text-stone-900">Tekno izolasyon, koruma ve dayanıklılık ürünleri.</h3>
+                <p className="mt-4 max-w-2xl text-lg leading-8 text-stone-600">Tekno endüstriyel ürünleriyle çelik, metal ve yapı yüzeylerine uzun ömürlü koruma sağlıyoruz. Yüksek performanslı kaplama, çıkmazlık ve yalıtım sistemleri ile tedarik sunuyoruz.</p>
               </div>
               <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-6">
                 <div className="space-y-4 text-sm text-stone-600">
                   <div className="flex items-start gap-3"><Warehouse size={18} className="mt-1 text-[#a11818]" /><div><p className="font-semibold text-stone-900">Yüksek seviyede stok kontrolü</p><p className="mt-1">Kritik malzemelerin sürekliliğini koruyan düzenli bir stok yapısı.</p></div></div>
-                  <div className="flex items-start gap-3"><Truck size={18} className="mt-1 text-[#a11818]" /><div><p className="font-semibold text-stone-900">Operasyonel dağıtım</p><p className="mt-1">İnşaat ve imalat operasyonlarının planlarına uygun Soudal ürün dağıtımı ile zaman yönetimi.</p></div></div>
+                  <div className="flex items-start gap-3"><Truck size={18} className="mt-1 text-[#a11818]" /><div><p className="font-semibold text-stone-900">Operasyonel dağıtım</p><p className="mt-1">İnşaat ve imalat operasyonlarının planlarına uygun Tekno ürün dağıtımı ile zaman yönetimi.</p></div></div>
                 </div>
               </div>
             </div>
@@ -385,7 +385,7 @@ function App() {
         <div className="mx-auto flex max-w-7xl flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Düz Metal</p>
-            <p className="mt-3 max-w-md leading-7">Soudal başta olmak üzere seçkin markaların yapı kimyası ve malzeme ürünlerini toptan dağıtım, stok desteği ve teknik uzmanlık ile sunar.</p>
+            <p className="mt-3 max-w-md leading-7">GÜÇLÜ STOK, TOPTAN SATIŞ, HIZLI TESLİMAT</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <a href="#kurumsal" className="transition hover:text-[#b51e1e]">Kurumsal</a>

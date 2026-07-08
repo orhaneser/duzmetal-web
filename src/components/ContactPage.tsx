@@ -114,7 +114,7 @@ export function ContactPage({ onBack, onNavigate }: { onBack: () => void; onNavi
         <div className="mx-auto flex max-w-7xl flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Düz Metal</p>
-            <p className="mt-3 max-w-md leading-7">Soudal başta olmak üzere seçkin markaların yapı kimyası ve malzeme ürünlerini toptan dağıtım, stok desteği ve teknik uzmanlık ile sunar.</p>
+            <p className="mt-3 max-w-md leading-7">GÜÇLÜ STOK, TOPTAN SATIŞ, HIZLI TESLİMAT</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <button type="button" onClick={handleLogoClick} className="transition hover:text-[#b51e1e]">Kurumsal</button>
