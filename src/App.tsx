@@ -252,7 +252,7 @@ function App() {
             <div className="max-w-3xl">
               <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: 'easeOut' }}>
                 <h1 className="text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-white sm:text-6xl lg:text-[4.4rem]">Güvenilir dağıtım, güçlü marka temsilciliği.</h1>
-                <p className="mt-7 max-w-2xl text-lg leading-8 text-white/90 sm:text-xl">Soudal ve diğer seçkin markalarla ürünlerini; güçlü stok, toptan satış ve teknik destek anlayışıyla müşterilerimize sunuyoruz.</p>
+                <p className="mt-7 max-w-2xl text-lg leading-8 text-white/90 sm:text-xl">GÜÇLÜ STOK, TOPTAN SATIŞ, HIZLI TESLİMAT</p>
                 <div className="mt-9 flex flex-wrap gap-3">
                   <button type="button" onClick={() => handlePageChange('contact')} className="rounded-full bg-[#b51e1e] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_12px_34px_rgba(181,30,30,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#a51818]">İletişime Geç</button>
                   <button type="button" onClick={() => setCurrentPage('catalog')} className="rounded-full border border-stone-400/70 bg-white/85 px-7 py-3.5 text-sm font-semibold text-stone-800 shadow-[0_10px_30px_rgba(0,0,0,0.08)] transition duration-300 hover:-translate-y-0.5 hover:bg-white">Ürünleri İncele</button>
@@ -262,7 +262,7 @@ function App() {
           </div>
         </section>
 
-        <Section eyebrow="Toptan Dağıtım ve Marka Temsili" title="Soudal ve diğer seçkin markalarla müşterilerimize güvenli, hızlı ve profesyonel bir tedarik deneyimi sunuyoruz." description="Müşterilerimize sadece ürün değil, teknik destek, stok güvence ve kesintisiz dağıtım altyapısı da sağlıyoruz.">
+        <Section eyebrow="Toptan Dağıtım ve Marka Temsili" title="SOUDAL,TYTAN,SELSİL,APEL VE DİĞER MARKALARLA" description="Müşterilerimize sadece ürün değil, teknik destek, stok güvence ve kesintisiz dağıtım altyapısı da sağlıyoruz.">
           <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="rounded-[2rem] border border-stone-200 bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.03)] sm:p-10">
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Operasyonel kapasite</p>
@@ -280,11 +280,11 @@ function App() {
           <div className="rounded-[2rem] border border-stone-200 bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.05)] sm:p-10">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Soudal Ürün Portföyü</p>
-                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-stone-900">Ürün portföyümüzü katalog sayfasında profesyonel düzenle inceleyebilirsiniz.</h3>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Ürün Portföyümüz</p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-stone-900">İHTİYACINIZA UYGUN TÜM İZOLASYON GRUBU ÜRÜNLERİ İLE HİZMETİNİZDEYİZ</h3>
               </div>
               <button type="button" onClick={() => setCurrentPage('catalog')} className="inline-flex items-center justify-center rounded-full bg-[#b51e1e] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#a51818]">
-                Katalog sayfasına git
+                Ürünlerimizi inceleyin
               </button>
             </div>
             <div className="mt-8 grid gap-6 lg:grid-cols-3">
