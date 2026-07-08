@@ -21,17 +21,23 @@ interface ImageSliderProps {
 
 const ImageSlider = ({ images, alt }: ImageSliderProps) => {
   const [current, setCurrent] = useState(0)
+  const [autoPlay, setAutoPlay] = useState(true)
 
   useEffect(() => {
+    if (!autoPlay) return
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length)
     }, 4000)
     return () => clearInterval(interval)
-  }, [images.length])
+  }, [images.length, autoPlay])
 
   return (
-    <div className="relative w-full h-full">
-      <div className="relative w-full h-full overflow-hidden rounded-[2rem]">
+    <div 
+      className="relative w-full h-full"
+      onMouseEnter={() => setAutoPlay(false)}
+      onMouseLeave={() => setAutoPlay(true)}
+    >
+      <div className="relative w-full h-full overflow-hidden rounded-[2rem] cursor-pointer group">
         {images.map((image, index) => (
           <motion.img
             key={index}
@@ -41,14 +47,19 @@ const ImageSlider = ({ images, alt }: ImageSliderProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: current === index ? 1 : 0 }}
             transition={{ duration: 0.5 }}
+            onClick={() => setCurrent((prev) => (prev + 1) % images.length)}
           />
         ))}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center bg-black/20">
+          <p className="text-white text-sm font-medium">Tıkla veya hover et resim değiştirmek için</p>
+        </div>
       </div>
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
         {images.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrent(index)}
+            onMouseEnter={() => setCurrent(index)}
             className={`transition-all duration-300 rounded-full ${
               current === index
                 ? 'bg-white w-8 h-2'
@@ -354,10 +365,7 @@ function App() {
         <section className="mx-auto w-full max-w-7xl px-6 py-6 sm:px-8 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.06)] grid gap-8 sm:grid-cols-[0.75fr_1fr]">
             <div className="aspect-[3/4] w-full overflow-hidden rounded-[2.5rem]">
-              <ImageSlider 
-                images={['/images/teknobond-401ep.jpg', '/images/dagitim-logistik-slider-1.jpg']} 
-                alt="Dağıtım ve Lojistik"
-              />
+              <img src="/images/teknobond-401ep.jpg" alt="TEKNOBOND 401 EP - Saf Epoksi Esaslı Kimyasal Döbel" className="h-full w-full object-cover" />
             </div>
             <div className="grid gap-8 bg-white/90 p-8 sm:p-10 lg:p-12 content-start">
               <div>
