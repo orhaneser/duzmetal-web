@@ -178,6 +178,58 @@ export function BrandsPage({ onBack, onNavigate }: { onBack: () => void; onNavig
               ))
             )}
           </div>
+
+          {/* Brand Showcase Section */}
+          <motion.section
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="mt-20 space-y-8"
+          >
+            <div className="text-center">
+              <h2 className="text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">Marka Kampanyaları ve Ürünleri</h2>
+              <p className="mt-4 text-lg text-stone-600">Düz Metal, tüm markaların ürünlerini profesyonel depo yönetimi, güvenli dağıtım ve teknik destek ile sunar.</p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-[0_20px_70px_rgba(15,23,42,0.04)] hover:shadow-[0_26px_80px_rgba(15,23,42,0.08)] transition"
+              >
+                <img src="/images/soudal-turkiye-satis.jpg" alt="Soudal Türkiye Satış - Güçlü Stok, Uygun Fiyat" className="h-[300px] w-full object-cover" />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.05 }}
+                className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-[0_20px_70px_rgba(15,23,42,0.04)] hover:shadow-[0_26px_80px_rgba(15,23,42,0.08)] transition"
+              >
+                <img src="/images/soudal-build-future.jpg" alt="Soudal - Build the Future" className="h-[300px] w-full object-cover" />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-[0_20px_70px_rgba(15,23,42,0.04)] hover:shadow-[0_26px_80px_rgba(15,23,42,0.08)] transition"
+              >
+                <img src="/images/beta-products.jpg" alt="Beta - Mitre, Apel, Tutkal Ürünleri" className="h-[300px] w-full object-cover" />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+                className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-[0_20px_70px_rgba(15,23,42,0.04)] hover:shadow-[0_26px_80px_rgba(15,23,42,0.08)] transition"
+              >
+                <img src="/images/tytan-mobilya.jpg" alt="TYTAN Professional - Mobilya İçin Uyumlu Çözüm" className="h-[300px] w-full object-cover" />
+              </motion.div>
+            </div>
+          </motion.section>
         </div>
       </main>
 
