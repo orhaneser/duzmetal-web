@@ -91,19 +91,19 @@ const fallbackProducts: ProductCardItem[] = [
   {
     title: 'Yapı Kimyasalları',
     description: 'Yapı ve imalat projelerinde dayanıklılık, uygulama kolaylığı ve uzun ömürlü performans hedefleyen Soudal yapıştırıcı, conta ve koruma çözümleri.',
-    image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/katalog-1.jpg',
     icon: Factory,
   },
   {
     title: 'Sızdırmazlık ve Conta Sistemleri',
     description: 'Hava, su ve termal sızdırmazlıkta profesyonel çözümler ve uygulama desteği.',
-    image: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/katalog-2.jpg',
     icon: Building2,
   },
   {
     title: 'Profesyonel İnşaat Çözümleri',
     description: 'Farklı saha koşullarına uygun, yüksek standartlı ürün dağıtımı ve teknik destek.',
-    image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/katalog-3.jpg',
     icon: PackageCheck,
   },
 ]
