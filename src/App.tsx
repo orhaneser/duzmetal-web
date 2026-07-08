@@ -14,6 +14,54 @@ import { BrandsPage } from './components/BrandsPage'
 import { Section } from './components/Section'
 import { StatCard } from './components/StatCard'
 
+interface ImageSliderProps {
+  images: string[];
+  alt: string;
+}
+
+const ImageSlider = ({ images, alt }: ImageSliderProps) => {
+  const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [images.length])
+
+  return (
+    <div className="relative w-full h-full">
+      <div className="relative w-full h-full overflow-hidden rounded-[2rem]">
+        {images.map((image, index) => (
+          <motion.img
+            key={index}
+            src={image}
+            alt={`${alt} ${index + 1}`}
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: current === index ? 1 : 0 }}
+            transition={{ duration: 0.5 }}
+          />
+        ))}
+      </div>
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrent(index)}
+            className={`transition-all duration-300 rounded-full ${
+              current === index
+                ? 'bg-white w-8 h-2'
+                : 'bg-white/60 w-2 h-2 hover:bg-white/80'
+            }`}
+            aria-label={`Slide ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 const reasons = [
   {
     title: 'Hızlı ve güvenli tedarik',
@@ -281,8 +329,11 @@ function App() {
 
         <Section id="hakkimizda" eyebrow="Hakkımızda" title="Müşterilerin güvenli ve düzenli tedarik akışını destekleyen bir dağıtım partneri." description="Düz Metal olarak, Soudal başta olmak üzere seçkin markaların ürünlerini güçlü stok, teknik destek ve toptan satış yaklaşımıyla müşterilerimize ulaştırıyoruz.">
           <div className="grid gap-8 lg:grid-cols-[0.94fr_1.06fr]">
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white">
-              <img src="/images/soudal-palet-stok.jpg" alt="Soudal 1000 Palet Stok - Düz Metal Depo" className="h-full w-full object-cover" />
+            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white min-h-[400px] md:min-h-[500px]">
+              <ImageSlider 
+                images={['/images/soudal-palet-stok.jpg', '/images/hakkimizda-slider-1.jpg']} 
+                alt="Hakkımızda Görselleri"
+              />
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.08 }} className="rounded-[2rem] border border-stone-200 bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.03)] sm:p-10">
               <p className="text-lg leading-8 text-stone-600">Düz Metal olarak, üretim, inşaat ve saha operasyonlarının ihtiyaçlarını karşılayabilmek için ileri düzey stok yönetimi, güvenli taşıma yapısı ve teknik ekip desteği ile çalışmalarımızı sürdürmekteyiz.</p>
@@ -301,9 +352,14 @@ function App() {
         </Section>
 
         <section className="mx-auto w-full max-w-7xl px-6 py-6 sm:px-8 lg:px-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.06)]">
-            <img src="/images/teknobond-401ep.jpg" alt="TEKNOBOND 401 EP - Saf Epoksi Esaslı Kimyasal Döbel" className="h-[420px] w-full object-cover sm:h-[520px]" />
-            <div className="grid gap-8 border-t border-stone-200 bg-white/90 p-8 sm:grid-cols-[1fr_0.75fr] sm:p-10 lg:p-12">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.06)] grid gap-8 sm:grid-cols-[0.75fr_1fr]">
+            <div className="aspect-[3/4] w-full overflow-hidden rounded-[2.5rem]">
+              <ImageSlider 
+                images={['/images/teknobond-401ep.jpg', '/images/dagitim-logistik-slider-1.jpg']} 
+                alt="Dağıtım ve Lojistik"
+              />
+            </div>
+            <div className="grid gap-8 bg-white/90 p-8 sm:p-10 lg:p-12 content-start">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Dağıtım ve lojistik</p>
                 <h3 className="mt-4 text-3xl font-semibold tracking-tight text-stone-900">Depo kapasitesi, operasyonel düzen ve teslimat güveni.</h3>
