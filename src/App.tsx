@@ -21,23 +21,17 @@ interface ImageSliderProps {
 
 const ImageSlider = ({ images, alt }: ImageSliderProps) => {
   const [current, setCurrent] = useState(0)
-  const [autoPlay, setAutoPlay] = useState(true)
 
   useEffect(() => {
-    if (!autoPlay) return
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length)
     }, 4000)
     return () => clearInterval(interval)
-  }, [images.length, autoPlay])
+  }, [images.length])
 
   return (
-    <div 
-      className="relative w-full h-full"
-      onMouseEnter={() => setAutoPlay(false)}
-      onMouseLeave={() => setAutoPlay(true)}
-    >
-      <div className="relative w-full h-full overflow-hidden rounded-[2rem] cursor-pointer group">
+    <div className="relative w-full h-full">
+      <div className="relative w-full h-full overflow-hidden rounded-[2rem]">
         {images.map((image, index) => (
           <motion.img
             key={index}
@@ -47,19 +41,14 @@ const ImageSlider = ({ images, alt }: ImageSliderProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: current === index ? 1 : 0 }}
             transition={{ duration: 0.5 }}
-            onClick={() => setCurrent((prev) => (prev + 1) % images.length)}
           />
         ))}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center bg-black/20">
-          <p className="text-white text-sm font-medium">Tıkla veya hover et resim değiştirmek için</p>
-        </div>
       </div>
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
         {images.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            onMouseEnter={() => setCurrent(index)}
             className={`transition-all duration-300 rounded-full ${
               current === index
                 ? 'bg-white w-8 h-2'
