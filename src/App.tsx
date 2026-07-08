@@ -242,7 +242,7 @@ function App() {
       </motion.header>
 
       <main>
-        <section className="relative z-20 flex min-h-screen items-center overflow-hidden">
+        <section className="relative z-20 flex min-h-screen items-center overflow-hidden pt-24">
           <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover" poster="/hero-video-poster.jpg">
             <source src="/hero-video.mp4" type="video/mp4" />
           </video>
