@@ -65,7 +65,7 @@ export function ContactPage({ onBack, onNavigate }: { onBack: () => void; onNavi
                 İstanbul merkezli operasyonlarımızla size yakın bir destek sunuyoruz.
               </h3>
               <p className="mt-4 text-lg leading-8 text-stone-600">
-                Projelerinizin gereksinimlerine uygun ürün ve lojistik planlaması için iletişime geçebilirsiniz.
+                İnşaat ve imalat operasyonlarınızın Soudal ve yapı kimyası ürün gereksinimlerine uygun lojistik planlaması için iletişime geçebilirsiniz.
               </p>
               <div className="mt-8 space-y-4">
                 <div className="flex items-start gap-3 text-stone-600">

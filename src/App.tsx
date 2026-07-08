@@ -65,17 +65,17 @@ const ImageSlider = ({ images, alt }: ImageSliderProps) => {
 const reasons = [
   {
     title: 'Hızlı ve güvenli tedarik',
-    description: 'Projelerin ihtiyacı olan Soudal ürünlerini güvenilir stok ve dağıtım altyapısıyla zamanında teslim ediyoruz.',
+    description: 'Soudal ve partner markaları yapı kimyası ürünlerini güçlü stok ve dağıtım altyapısıyla zamanda teslim ediyoruz.',
     icon: Warehouse,
   },
   {
     title: 'Teknik danışmanlık ve destek',
-    description: 'Ürün seçimi, uygulama alanı ve saha ihtiyaçları için uzman ekibimiz yanınızda.',
+    description: 'Soudal ürün seçimi, uygulama alanı ve saha ihtiyaçları için uzman ekibimiz yanınızda.',
     icon: Truck,
   },
   {
-    title: 'Profesyonel saha yaklaşımı',
-    description: 'Yapı projelerinde doğru ürün, doğru kullanım ve doğru teslimat akışıyla operasyonel süreklilik sağlıyoruz.',
+    title: 'Profesyonel dağıtım yönetimi',
+    description: 'Soudal kimyası ürünlerinde doğru seçim, profesyonel depolama ve güvenilir teslimat akışıyla operasyonel süreklilik sağlıyoruz.',
     icon: ShieldCheck,
   },
 ]
@@ -89,20 +89,20 @@ type ProductCardItem = {
 
 const fallbackProducts: ProductCardItem[] = [
   {
-    title: 'Yapı Kimyasalları',
-    description: 'Yapı ve imalat projelerinde dayanıklılık, uygulama kolaylığı ve uzun ömürlü performans hedefleyen Soudal yapıştırıcı, conta ve koruma çözümleri.',
+    title: 'Soudal Yapı Kimyasalları',
+    description: 'Yapı ve imalat operasyonlarında dayanıklılık, uygulama kolaylığı ve uzun ömürlü performans hedefleyen Soudal yapıştırıcı, conta ve koruma ürünleri. Resmi Soudal distribütörü olarak toptan satış sunuyoruz.',
     image: '/images/katalog-1.jpg',
     icon: Factory,
   },
   {
-    title: 'Sızdırmazlık ve Conta Sistemleri',
-    description: 'Hava, su ve termal sızdırmazlıkta profesyonel çözümler ve uygulama desteği.',
+    title: 'Soudal Sızdırmazlık Sistemleri',
+    description: 'Soudal silikon ve poliüretan sızdırmazlık ürünlerinde hava, su ve termal yalıtımda profesyonel çözümler ve teknik destek.',
     image: '/images/katalog-2.jpg',
     icon: Building2,
   },
   {
-    title: 'Profesyonel İnşaat Çözümleri',
-    description: 'Farklı saha koşullarına uygun, yüksek standartlı ürün dağıtımı ve teknik destek.',
+    title: 'Endüstriyel Tedarik Çözümleri',
+    description: 'Soudal ve partner markaları yapı kimyası ürünlerinin profesyonel depo yönetimi, stok desteği ve garantili teslimat sunumu.',
     image: '/images/katalog-3.jpg',
     icon: PackageCheck,
   },
@@ -266,7 +266,7 @@ function App() {
           <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="rounded-[2rem] border border-stone-200 bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.03)] sm:p-10">
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Operasyonel kapasite</p>
-              <p className="mt-4 text-lg leading-8 text-stone-600">Projelerde süreklilik sağlayan, büyük ölçekli tedarik ihtiyaçlarına cevap veren yapımızla iş ortaklarımızın beklentilerini en iyi şekilde karşılıyoruz.</p>
+              <p className="mt-4 text-lg leading-8 text-stone-600">Tedarik zincirinde güvenilirlik sağlayan, büyük ölçekli Soudal ve partner markaları ihtiyaçlarına cevap veren yapımızla iş ortaklarımızın beklentilerini en iyi şekilde karşılıyoruz.</p>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               {stats.map((item) => (
@@ -280,8 +280,8 @@ function App() {
           <div className="rounded-[2rem] border border-stone-200 bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.05)] sm:p-10">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Katalog görünümleri</p>
-                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-stone-900">Ürünleri ayrı bir sayfada, daha net ve profesyonel bir düzenle inceleyin.</h3>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Soudal Ürün Portföyü</p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-stone-900">Soudal ve partner markaları ürünlerini katalog sayfasında profesyonel düzenle inceleyebilirsiniz.</h3>
               </div>
               <button type="button" onClick={() => setCurrentPage('catalog')} className="inline-flex items-center justify-center rounded-full bg-[#b51e1e] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#a51818]">
                 Katalog sayfasına git
@@ -310,7 +310,7 @@ function App() {
           </div>
         </Section>
 
-        <Section id="hizmetler" eyebrow="Neden Düz Metal" title="Saha odaklı hizmet anlayışımızla iş ortaklarınıza güven veren bir dağıtım partneri." description="Stok, lojistik, ürün bilgisi ve teknik destek süreçleri aynı çatı altında, güvenli ve öngörülebilir bir şekilde yürütülür.">
+        <Section id="hizmetler" eyebrow="Neden Soudal Distribütörü Olarak Biz" title="Soudal tedarikinde deneyim, güvenilirlik ve operasyonel mükemmellik ile hizmet sunan dağıtım partneri." description="Stok güveni, lojistik yönetimi, Soudal ürün bilgisi ve teknik destek süreçleri aynı çatı altında, güvenli ve öngörülebilir bir şekilde yürütülür.">
           <div className="grid gap-6 lg:grid-cols-3">
             {reasons.map((item, index) => {
               const Icon = item.icon
@@ -327,7 +327,7 @@ function App() {
           </div>
         </Section>
 
-        <Section id="hakkimizda" eyebrow="Hakkımızda" title="Müşterilerin güvenli ve düzenli tedarik akışını destekleyen bir dağıtım partneri." description="Düz Metal olarak, Soudal başta olmak üzere seçkin markaların ürünlerini güçlü stok, teknik destek ve toptan satış yaklaşımıyla müşterilerimize ulaştırıyoruz.">
+        <Section id="hakkimizda" eyebrow="Soudal Distribütörü Düz Metal Hakkında" title="Soudal ve partner markaların yapı kimyası ürünlerinde güvenilir tedarik ortağı." description="Düz Metal olarak, yapı ve imalat operasyonlarının ihtiyaçlarını karşılayabilmek için ileri düzey stok yönetimi, güvenli taşıma yapısı ve teknik ekip desteği ile çalışmaktayız.">
           <div className="grid gap-8 lg:grid-cols-[0.94fr_1.06fr]">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white min-h-[400px] md:min-h-[500px]">
               <ImageSlider 
@@ -340,7 +340,7 @@ function App() {
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-[1.25rem] border border-stone-200 bg-stone-50 p-5">
                   <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#b51e1e]">Misyon</p>
-                  <p className="mt-3 text-sm leading-7 text-stone-600">Projelerin güvenli, zamanında ve maliyet etkin ilerlemesini sağlayan çözümler üretmek.</p>
+                  <p className="mt-3 text-sm leading-7 text-stone-600">Tedarik operasyonlarını güvenli, zamanında ve maliyet etkin şekilde yürütülmesini sağlayan çözümler sunmak. Soudal ve partner markaları ürünlerinde en güvenilir dağıtıcı olmak.</p>
                 </div>
                 <div className="rounded-[1.25rem] border border-stone-200 bg-stone-50 p-5">
                   <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#b51e1e]">Vizyon</p>
@@ -358,21 +358,21 @@ function App() {
             </div>
             <div className="grid gap-8 bg-white/90 p-8 sm:p-10 lg:p-12 content-start">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Dağıtım ve lojistik</p>
-                <h3 className="mt-4 text-3xl font-semibold tracking-tight text-stone-900">Depo kapasitesi, operasyonel düzen ve teslimat güveni.</h3>
-                <p className="mt-4 max-w-2xl text-lg leading-8 text-stone-600">Büyüyen proje ihtiyaçlarına cevap verebilmek için depo organizasyonunu, stok takibini ve sevkiyat akışını güçlü bir altyapı ile destekliyoruz.</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Soudal Distribütörü - Dağıtım ve Lojistik</p>
+                <h3 className="mt-4 text-3xl font-semibold tracking-tight text-stone-900">Soudal depo kapasitesi, stok güveni ve hızlı teslimat.</h3>
+                <p className="mt-4 max-w-2xl text-lg leading-8 text-stone-600">Büyüyen Soudal ve yapı kimyası tedarik ihtiyaçlarına cevap verebilmek için depo organizasyonunu, stok takibini ve sevkiyat akışını güçlü bir altyapı ile destekliyoruz.</p>
               </div>
               <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-6">
                 <div className="space-y-4 text-sm text-stone-600">
                   <div className="flex items-start gap-3"><Warehouse size={18} className="mt-1 text-[#a11818]" /><div><p className="font-semibold text-stone-900">Yüksek seviyede stok kontrolü</p><p className="mt-1">Kritik malzemelerin sürekliliğini koruyan düzenli bir stok yapısı.</p></div></div>
-                  <div className="flex items-start gap-3"><Truck size={18} className="mt-1 text-[#a11818]" /><div><p className="font-semibold text-stone-900">Operasyonel dağıtım</p><p className="mt-1">Projelerin planlarına uygun dağıtım süreçleri ile zaman yönetimi.</p></div></div>
+                  <div className="flex items-start gap-3"><Truck size={18} className="mt-1 text-[#a11818]" /><div><p className="font-semibold text-stone-900">Operasyonel dağıtım</p><p className="mt-1">İnşaat ve imalat operasyonlarının planlarına uygun Soudal ürün dağıtımı ile zaman yönetimi.</p></div></div>
                 </div>
               </div>
             </div>
           </motion.div>
         </section>
 
-        <Section id="referanslar" eyebrow="Referanslar" title="Farklı sektörlerden gelen güçlü iş birlikleri." description="Endüstri ihtiyaçlarının çeşitliliğine göre esnek ve güvenilir çözümler sunuyoruz." align="center">
+        <Section id="referanslar" eyebrow="Tedarik Sektörleri" title="Soudal ve yapı kimyası ürünlerini farklı endüstrilere dağıtıyoruz." description="Endüstri ihtiyaçlarının çeşitliliğine göre esnek ve güvenilir Soudal tedarik çözümleri sunuyoruz." align="center">
           <div className="flex flex-wrap justify-center gap-3">
             {references.map((ref) => (
               <motion.div key={ref} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }} className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm text-stone-600">{ref}</motion.div>
