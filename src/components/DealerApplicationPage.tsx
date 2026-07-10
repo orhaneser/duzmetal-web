@@ -76,10 +76,21 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+    
+    // Vergi numarası - sadece rakam
+    if (name === 'vergi_no') {
+      const onlyNumbers = value.replace(/\D/g, '')
+      setFormData((prev) => ({
+        ...prev,
+        [name]: onlyNumbers,
+      }))
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }))
+    }
+    
     // Temizle hatayı
     if (errors[name]) {
       setErrors((prev) => ({
@@ -165,42 +176,43 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
       </motion.header>
 
       <main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 pt-24">
-      <div className="max-w-2xl mx-auto px-4 py-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Bayilik Başvurusu
-          </h1>
-          <p className="text-lg text-gray-600">
-            Duzmetal'in güçlü iş ortaklığı programına katılın ve Soudal, Tytan,
-            Selsil ve diğer markaların distribütörü olun.
-          </p>
-        </motion.div>
+        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-12">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-2xl mx-auto"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Bayilik Başvurusu
+            </h1>
+            <p className="text-lg text-gray-600">
+              Duzmetal olarak binlerce ürünü stokluyoruz. İnşaat ve imalat firmalarının ihtiyacı olan yapı kimyası ürünlerini (Soudal, Tytan, Selsil, Apel ve daha fazlası) büyük stok kapasitesi ve hızlı teslimatla sağlıyoruz. Bize başvurarak Duzmetal'in tedarik ağına katılın ve bu ürünleri kendi müşterilerinize satın.
+            </p>
+          </motion.div>
 
-        {/* Form Container */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-white rounded-2xl shadow-lg p-8 md:p-10"
-        >
-          {submitted ? (
+          {/* Form ve Resim Grid */}
+          <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr]">
+            {/* Form Container */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="bg-white rounded-2xl shadow-lg p-8 md:p-10"
             >
-              <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                Başvuru Başarıyla Gönderildi!
-              </h3>
-              <p className="text-gray-600">
-                Başvurunuz alınmıştır. Kısa sürede sizinle iletişime
+              {submitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-12"
+                >
+                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    Başvuru Başarıyla Gönderildi!
+                  </h3>
+                  <p className="text-gray-600">
+                    Başvurunuz alınmıştır. Kısa sürede sizinle iletişime
                 geçilecektir.
               </p>
             </motion.div>
@@ -394,7 +406,7 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
                 className={`w-full py-3 px-6 rounded-lg font-semibold text-white transition flex items-center justify-center gap-2 ${
                   loading
                     ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
+                    : 'bg-[#b51e1e] hover:bg-[#a51818] active:bg-[#941414]'
                 }`}
               >
                 {loading ? (
@@ -411,27 +423,40 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
                 <span className="text-red-500">*</span> Zorunlu alanlar
               </p>
             </form>
-          )}
-        </motion.div>
+            )}
+            </motion.div>
 
-        {/* Info Box */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-12 bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6"
-        >
-          <h3 className="font-semibold text-blue-900 mb-2">
-            Bayilik Hakkında
-          </h3>
-          <p className="text-blue-700 text-sm">
-            Duzmetal olarak, Soudal, Tytan, Selsil, Apel ve diğer güçlü markaların
-            distribütörü olmak için sizi bekliyoruz. Güçlü stok, hızlı teslimat ve
-            profesyonel destek ile iş ortakları olarak büyüyebiliriz. Başvurunuz
-            alındıktan sonra en kısa sürede sizinle iletişime geçilecektir.
-          </p>
-        </motion.div>
-      </div>
+            {/* Right Side - Image */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="hidden lg:flex rounded-2xl border border-stone-200 bg-white shadow-lg overflow-hidden"
+            >
+              <img
+                src="/images/soudal-palet-stok.jpg"
+                alt="Duzmetal Stok"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          </div>
+
+          {/* Info Box */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-[#b51e1e]/10 border-l-4 border-[#b51e1e] rounded-lg p-6"
+          >
+            <h3 className="font-semibold text-[#a11818] mb-2">
+              Duzmetal'in Tedarik Ağına Katılın
+            </h3>
+            <p className="text-[#7a1414] text-sm">
+              Binlerce ürünü stoklayan Duzmetal, hızlı teslimat ve profesyonel destek ile iş ortaklarını büyütmeye yardımcı olur. Başvurunuz alındıktan sonra en kısa sürede sizinle iletişime geçilecektir.
+            </p>
+          </motion.div>
+        </div>
       </main>
 
       <footer className="border-t border-stone-300/70 bg-white/70 px-6 py-10 text-sm text-stone-600 sm:px-8 lg:px-10">
