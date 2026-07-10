@@ -89,7 +89,7 @@ AÇIKLAMA: ${aciklama}
     // Email gönder
     const mailOptions = {
       from: 'b2b@duzmetal.com',
-      to: ['satisdestek@duzmetal.com', 'orhaneser60@gmail.com'],
+      to: 'satisdestek@duzmetal.com, orhaneser60@gmail.com',
       subject: `Yeni Bayilik Başvurusu - ${firma_adi}`,
       html: `
         <html>
@@ -154,6 +154,7 @@ Tarih: ${timestamp}
 
     console.log('Email gönderildi:', {
       to: mailOptions.to,
+      cc: mailOptions.cc,
       subject: mailOptions.subject,
     })
 
@@ -171,6 +172,6 @@ Tarih: ${timestamp}
 })
 
 const PORT = process.env.PORT || 3001
-app.listen(PORT, 'localhost', () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`)
 })
