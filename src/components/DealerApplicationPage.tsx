@@ -187,9 +187,6 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Bayilik Başvurusu
             </h1>
-            <p className="text-lg text-gray-600">
-              Duzmetal olarak binlerce ürünü stokluyoruz. İnşaat ve imalat firmalarının ihtiyacı olan yapı kimyası ürünlerini (Soudal, Tytan, Selsil, Apel ve daha fazlası) büyük stok kapasitesi ve hızlı teslimatla sağlıyoruz. Bize başvurarak Duzmetal'in tedarik ağına katılın ve bu ürünleri kendi müşterilerinize satın.
-            </p>
           </motion.div>
 
           {/* Form ve Resim Grid */}
