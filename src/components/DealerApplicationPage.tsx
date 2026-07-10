@@ -64,9 +64,6 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
       }
     }
 
-    if (!formData.aciklama.trim()) {
-      newErrors.aciklama = 'Açıklama zorunludur'
-    }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -77,8 +74,8 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
   ) => {
     const { name, value } = e.target
     
-    // Vergi numarası - sadece rakam
-    if (name === 'vergi_no') {
+    // Vergi numarası ve telefon - sadece rakam
+    if (name === 'vergi_no' || name === 'telefon') {
       const onlyNumbers = value.replace(/\D/g, '')
       setFormData((prev) => ({
         ...prev,
@@ -119,7 +116,29 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
         body: JSON.stringify(formData),
       })
 
-      const data = await response.json()
+      let data
+      try {
+        data = await response.json()
+      } catch (parseError) {
+        // JSON parsing hatasını yakala
+        if (!response.ok) {
+          throw new Error('Başvuru gönderilemedi. Lütfen daha sonra tekrar deneyiniz.')
+        }
+        // Success durumunda JSON parse hatası olabilir (boş response)
+        setSubmitted(true)
+        setFormData({
+          ad_soyad: '',
+          telefon: '',
+          firma_adi: '',
+          vergi_dairesi: '',
+          vergi_no: '',
+          aciklama: '',
+        })
+        setTimeout(() => {
+          setSubmitted(false)
+        }, 3000)
+        return
+      }
 
       if (!response.ok) {
         throw new Error(data.message || 'Başvuru gönderilemedi')
@@ -141,7 +160,7 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
       }, 3000)
     } catch (error) {
       setSubmitError(
-        error instanceof Error ? error.message : 'Bir hata oluştu'
+        error instanceof Error ? error.message : 'Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.'
       )
     } finally {
       setLoading(false)
@@ -250,12 +269,13 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
                   Telefon <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="tel"
+                  type="text"
                   id="telefon"
                   name="telefon"
                   value={formData.telefon}
                   onChange={handleChange}
-                  placeholder="0532 XXX XX XX"
+                  placeholder="5499032410"
+                  inputMode="numeric"
                   className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:border-blue-500 transition ${
                     errors.telefon ? 'border-red-500 bg-red-50' : 'border-gray-200'
                   }`}
@@ -340,6 +360,7 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
                   onChange={handleChange}
                   placeholder="Vergi Numarası"
                   inputMode="numeric"
+                  maxLength={11}
                   className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:border-blue-500 transition ${
                     errors.vergi_no
                       ? 'border-red-500 bg-red-50'
@@ -357,7 +378,10 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
                   htmlFor="aciklama"
                   className="block text-sm font-semibold text-gray-900 mb-2"
                 >
-                  Açıklama / Müşteri Hedef Grubu <span className="text-red-500">*</span>
+                  Açıklama
+                  <span className="text-sm font-normal text-gray-500 ml-2">
+                    (İsteğe Bağlı)
+                  </span>
                 </label>
                 <textarea
                   id="aciklama"
@@ -366,17 +390,8 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
                   onChange={handleChange}
                   placeholder="Firmanız hakkında bilgi verin, hangi müşteri gruplarını hedeflediniz, neden Duzmetal'i seçmek istiyorsunuz..."
                   rows={5}
-                  className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:border-blue-500 transition resize-none ${
-                    errors.aciklama
-                      ? 'border-red-500 bg-red-50'
-                      : 'border-gray-200'
-                  }`}
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition resize-none"
                 />
-                {errors.aciklama && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.aciklama}
-                  </p>
-                )}
               </div>
 
               {/* Error Message */}
@@ -384,12 +399,15 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="bg-red-50 border-2 border-red-200 rounded-lg p-4 flex items-start gap-3"
+                  className="bg-red-50 border-2 border-red-500 rounded-lg p-4 flex items-start gap-3"
                 >
-                  <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-semibold text-red-900">Hata</h4>
-                    <p className="text-red-700 text-sm">{submitError}</p>
+                  <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-red-900">Şu anda bir hata oluştu</h4>
+                    <p className="text-red-700 text-sm mt-1">{submitError}</p>
+                    <p className="text-red-700 text-sm mt-2">
+                      Lütfen yandaki görselde yer alan iletişim bilgilerimizden bizi arayarak başvurunuzu iletebilirsiniz.
+                    </p>
                   </div>
                 </motion.div>
               )}
@@ -432,8 +450,8 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
               className="hidden lg:flex rounded-2xl border border-stone-200 bg-white shadow-lg overflow-hidden"
             >
               <img
-                src="/images/dagitim-logistik-slider-1.jpg"
-                alt="Duzmetal Dağıtım"
+                src="/images/Bayilik.png"
+                alt="Duzmetal Bayilik"
                 className="w-full h-full object-cover"
               />
             </motion.div>

@@ -1,32 +1,7 @@
-import express from 'express'
+import type { VercelRequest, VercelResponse } from '@vercel/node'
 import nodemailer from 'nodemailer'
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
-const app = express()
-app.use(express.json())
-
-// CORS Header'ları
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200)
-  }
-  next()
-})
-
-// Logs directory oluştur
-const logsDir = path.join(__dirname, 'logs')
-if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir)
-}
-
-// Nodemailer transporter
+// Nodemailer transporter konfigürasyonu
 const transporter = nodemailer.createTransport({
   host: 'mail.uzmanposta.com',
   port: 587,
@@ -37,19 +12,23 @@ const transporter = nodemailer.createTransport({
   },
 })
 
-// Verifi et
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('SMTP Connection Error:', error)
-  } else {
-    console.log('SMTP Server Ready')
-  }
-})
+export default async (req: VercelRequest, res: VercelResponse) => {
+  // CORS Header'ları
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 
-app.post('/api/dealer-application', async (req, res) => {
+  // OPTIONS isteği
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end()
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method not allowed' })
+  }
+
   try {
-    const { ad_soyad, telefon, firma_adi, vergi_dairesi, vergi_no, aciklama } =
-      req.body
+    const { ad_soyad, telefon, firma_adi, vergi_dairesi, vergi_no, aciklama } = req.body
 
     // Validasyon (aciklama isteğe bağlı)
     if (!ad_soyad || !telefon || !firma_adi || !vergi_dairesi || !vergi_no) {
@@ -66,25 +45,6 @@ app.post('/api/dealer-application', async (req, res) => {
 
     // Timestamp
     const timestamp = new Date().toLocaleString('tr-TR')
-    const logDate = new Date().toISOString().split('T')[0]
-
-    // Log dosyasına kaydet
-    const logFile = path.join(logsDir, `dealer-applications-${logDate}.txt`)
-    const logEntry = `
-=====================================
-TARİH: ${timestamp}
-=====================================
-AD SOYAD: ${ad_soyad}
-TELEFON: ${telefon}
-FIRMA ADI: ${firma_adi}
-VERGİ DAİRESİ: ${vergi_dairesi}
-VERGİ NUMARASI: ${vergi_no}
-AÇIKLAMA: ${aciklama}
-=====================================
-
-`
-
-    fs.appendFileSync(logFile, logEntry)
 
     // Email gönder
     const mailOptions = {
@@ -124,7 +84,7 @@ AÇIKLAMA: ${aciklama}
                   </tr>
                   <tr>
                     <td style="padding: 10px; border-bottom: 1px solid #ddd; font-weight: bold; vertical-align: top;">Açıklama:</td>
-                    <td style="padding: 10px; border-bottom: 1px solid #ddd; white-space: pre-wrap;">${aciklama}</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd; white-space: pre-wrap;">${aciklama || '(Boş)'}</td>
                   </tr>
                 </table>
               </div>
@@ -145,34 +105,31 @@ Telefon: ${telefon}
 Firma Adı: ${firma_adi}
 Vergi Dairesi: ${vergi_dairesi}
 Vergi Numarası: ${vergi_no}
-Açıklama: ${aciklama}
+Açıklama: ${aciklama || '(Boş)'}
 
 Tarih: ${timestamp}
       `,
     }
 
+    // Mail gönder
     await transporter.sendMail(mailOptions)
 
     console.log('Email gönderildi:', {
       to: mailOptions.to,
       cc: mailOptions.cc,
       subject: mailOptions.subject,
+      timestamp,
     })
 
-    res.json({
+    return res.status(200).json({
       success: true,
       message: 'Başvuru başarıyla gönderilmiştir',
     })
   } catch (error) {
-    console.error('Error:', error)
-    res.status(500).json({
-      message:
-        'Başvuru gönderilemedi. Lütfen daha sonra tekrar deneyiniz.',
+    console.error('Dealer Application Error:', error)
+    return res.status(500).json({
+      message: 'Başvuru gönderilemedi. Lütfen daha sonra tekrar deneyiniz.',
+      error: error instanceof Error ? error.message : 'Unknown error',
     })
   }
-})
-
-const PORT = process.env.PORT || 3001
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+}

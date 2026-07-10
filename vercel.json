@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "env": {
+    "SMTP_HOST": "@smtp_host",
+    "SMTP_PORT": "@smtp_port",
+    "SMTP_USER": "@smtp_user",
+    "SMTP_PASS": "@smtp_pass"
+  }
+}
