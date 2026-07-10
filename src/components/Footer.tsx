@@ -14,21 +14,14 @@ export const Footer = ({ onPageChange }: FooterProps) => {
         </div>
         <div className="flex flex-wrap items-center gap-3">
           {NAVIGATION_MENU.map((item) => (
-            <div key={item.label}>
-              {item.type === 'link' ? (
-                <a href={item.href} className="transition hover:text-[#b51e1e]">
-                  {item.label}
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => onPageChange(item.page)}
-                  className="transition hover:text-[#b51e1e]"
-                >
-                  {item.label}
-                </button>
-              )}
-            </div>
+            <button
+              key={item.label}
+              type="button"
+              onClick={() => onPageChange(item.page)}
+              className="transition hover:text-[#b51e1e]"
+            >
+              {item.label}
+            </button>
           ))}
           <a href="https://b2b.duzmetal.com" target="_blank" rel="noreferrer" className="rounded-full border border-[#b51e1e]/15 bg-[#b51e1e]/10 px-4 py-2 text-sm font-semibold text-[#a11818] transition hover:bg-[#b51e1e]/15">
             B2B Giriş

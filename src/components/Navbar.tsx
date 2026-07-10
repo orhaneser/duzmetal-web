@@ -17,21 +17,14 @@ export const Navbar = ({ onPageChange }: NavbarProps) => {
         </a>
         <nav className="hidden flex-1 items-center justify-center gap-2 text-sm font-semibold tracking-[0.02em] text-white md:flex">
           {NAVIGATION_MENU.map((item) => (
-            <div key={item.label}>
-              {item.type === 'link' ? (
-                <a href={item.href} className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white">
-                  {item.label}
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => onPageChange(item.page)}
-                  className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white"
-                >
-                  {item.label}
-                </button>
-              )}
-            </div>
+            <button
+              key={item.label}
+              type="button"
+              onClick={() => onPageChange(item.page)}
+              className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white"
+            >
+              {item.label}
+            </button>
           ))}
         </nav>
         <a href="https://b2b.duzmetal.com" target="_blank" rel="noreferrer" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#b51e1e] shadow-[0_10px_30px_rgba(0,0,0,0.16)] transition duration-300 hover:-translate-y-0.5 hover:bg-stone-100 hover:shadow-[0_12px_35px_rgba(0,0,0,0.2)]">

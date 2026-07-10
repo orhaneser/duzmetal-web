@@ -1,6 +1,6 @@
 // Tüm menü linklerinin merkezi tanımı
 export const NAVIGATION_MENU = [
-  { label: 'Kurumsal', href: '#kurumsal', type: 'link' as const },
+  { label: 'Kurumsal', page: 'home' as const, type: 'button' as const },
   { label: 'Ürünlerimiz', page: 'catalog' as const, type: 'button' as const },
   { label: 'Markalarımız', page: 'brands' as const, type: 'button' as const },
   { label: 'İletişim', page: 'contact' as const, type: 'button' as const },
