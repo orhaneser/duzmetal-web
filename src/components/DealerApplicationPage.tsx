@@ -432,8 +432,8 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
               className="hidden lg:flex rounded-2xl border border-stone-200 bg-white shadow-lg overflow-hidden"
             >
               <img
-                src="/images/soudal-palet-stok.jpg"
-                alt="Duzmetal Stok"
+                src="/images/dagitim-logistik-slider-1.jpg"
+                alt="Duzmetal Dağıtım"
                 className="w-full h-full object-cover"
               />
             </motion.div>

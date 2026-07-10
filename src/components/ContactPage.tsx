@@ -86,7 +86,7 @@ export function ContactPage({ onBack, onNavigate }: { onBack: () => void; onNavi
                   <Phone size={18} className="mt-0.5 text-[#a11818]" />
                   <div>
                     <p className="font-semibold text-stone-900">Telefon</p>
-                    <p>(0212) 485 20 19</p>
+                    <p>+90 549 903 24 10</p>
                   </div>
                 </div>
               </div>
