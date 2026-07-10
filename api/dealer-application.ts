@@ -49,8 +49,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     // Email gönder
     const mailOptions = {
       from: 'b2b@duzmetal.com',
-      to: 'b2b@duzmetal.com',
-      cc: 'satisdestek@duzmetal.com',
+      to: ['satisdestek@duzmetal.com', 'orhaneser60@gmail.com'],
       subject: `Yeni Bayilik Başvurusu - ${firma_adi}`,
       html: `
         <html>
@@ -116,7 +115,6 @@ Tarih: ${timestamp}
 
     console.log('Email gönderildi:', {
       to: mailOptions.to,
-      cc: mailOptions.cc,
       subject: mailOptions.subject,
       timestamp,
     })
