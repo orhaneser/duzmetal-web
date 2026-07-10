@@ -5,6 +5,7 @@ import {
   SlidersHorizontal,
 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
+import { Navbar } from './Navbar'
 
 type CatalogProduct = {
   id: string
@@ -146,16 +147,12 @@ function formatPageRange(total: number, page: number) {
   return `${start}-${end}`
 }
 
-export function ProductCatalogPage({ onBack, onNavigate }: { onBack: () => void; onNavigate: (page: 'home' | 'catalog' | 'contact' | 'brands') => void }) {
+export function ProductCatalogPage({ onNavigate }: { onNavigate: (page: 'home' | 'catalog' | 'contact' | 'brands' | 'dealer') => void }) {
   const [products, setProducts] = useState<CatalogProduct[]>([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedBrand, setSelectedBrand] = useState('Tümü')
-
-  const handleLogoClick = () => {
-    onBack()
-  }
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -268,29 +265,7 @@ export function ProductCatalogPage({ onBack, onNavigate }: { onBack: () => void;
 
   return (
     <div className="min-h-screen bg-transparent px-4 py-8 text-stone-800 sm:px-6 lg:px-8">
-      <motion.header
-        style={{ opacity: 1 }}
-        className="fixed inset-x-0 top-4 z-40 px-4 sm:px-6 lg:px-8 pointer-events-auto mb-4"
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-[1.5rem] border border-[#d94a4a]/25 bg-[#b51e1e] px-4 py-3.5 shadow-[0_18px_60px_rgba(12,12,12,0.24)] sm:px-5 sm:py-4 lg:px-6 lg:py-4.5">
-          <button onClick={handleLogoClick} className="flex items-center rounded-full px-1.5 py-1.5 text-white transition hover:bg-white/10">
-            <img
-              src="https://api.duzmetal.com/medyalar/genel/ac6c6626-c109-4279-9088-b236e34d946b.png"
-              alt="Düz Metal"
-              className="h-10 w-auto object-contain brightness-0 invert sm:h-12"
-            />
-          </button>
-          <nav className="hidden flex-1 items-center justify-center gap-2 text-sm font-semibold tracking-[0.02em] text-white md:flex">
-            <button type="button" onClick={() => onNavigate('home')} className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white">Kurumsal</button>
-            <button type="button" className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white">Ürünlerimiz</button>
-            <button type="button" onClick={() => onNavigate('brands')} className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white">Markalarımız</button>
-            <button type="button" onClick={() => onNavigate('contact')} className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white">İletişim</button>
-          </nav>
-          <a href="https://b2b.duzmetal.com" target="_blank" rel="noreferrer" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#b51e1e] shadow-[0_10px_30px_rgba(0,0,0,0.16)] transition duration-300 hover:-translate-y-0.5 hover:bg-stone-100 hover:shadow-[0_12px_35px_rgba(0,0,0,0.2)]">
-            B2B Giriş
-          </a>
-        </div>
-      </motion.header>
+      <Navbar onPageChange={onNavigate} />
 
       <div className="mx-auto flex max-w-7xl flex-col gap-8 pt-24">
 
