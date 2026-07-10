@@ -11,6 +11,7 @@ import {
 import { ProductCatalogPage } from './components/ProductCatalogPage'
 import { ContactPage } from './components/ContactPage'
 import { BrandsPage } from './components/BrandsPage'
+import { DealerApplicationPage } from './components/DealerApplicationPage'
 import { Section } from './components/Section'
 import { StatCard } from './components/StatCard'
 
@@ -119,10 +120,10 @@ const references = ['Enerji', 'İnşaat', 'İmalat', 'Lojistik', 'Altyapı', 'Ot
 
 function App() {
   const [products, setProducts] = useState<ProductCardItem[]>(fallbackProducts)
-  const [currentPage, setCurrentPage] = useState<'home' | 'catalog' | 'contact' | 'brands'>(() => {
+  const [currentPage, setCurrentPage] = useState<'home' | 'catalog' | 'contact' | 'brands' | 'dealer'>(() => {
     // URL'den page'i oku
     const hash = window.location.hash.slice(2) // #/home -> home
-    const validPages = ['home', 'catalog', 'contact', 'brands']
+    const validPages = ['home', 'catalog', 'contact', 'brands', 'dealer']
     const pageFromUrl = hash as any
     if (validPages.includes(pageFromUrl)) {
       return pageFromUrl
@@ -136,7 +137,7 @@ function App() {
   })
 
   // URL'yi güncelle ve localStorage'a kaydet
-  const handlePageChange = (page: 'home' | 'catalog' | 'contact' | 'brands') => {
+  const handlePageChange = (page: 'home' | 'catalog' | 'contact' | 'brands' | 'dealer') => {
     setCurrentPage(page)
     window.location.hash = `#/${page}`
     localStorage.setItem('duzmetal-current-page', page)
@@ -215,6 +216,10 @@ function App() {
     return <BrandsPage onBack={() => handlePageChange('home')} onNavigate={handlePageChange} />
   }
 
+  if (currentPage === 'dealer') {
+    return <DealerApplicationPage />
+  }
+
   return (
     <div className="min-h-screen bg-transparent text-stone-800">
       <motion.header
@@ -234,6 +239,7 @@ function App() {
             <button type="button" onClick={() => handlePageChange('catalog')} className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white">Ürünlerimiz</button>
             <button type="button" onClick={() => handlePageChange('brands')} className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white">Markalarımız</button>
             <button type="button" onClick={() => handlePageChange('contact')} className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white">İletişim</button>
+            <button type="button" onClick={() => handlePageChange('dealer')} className="rounded-full px-4.5 py-2.5 transition duration-300 hover:bg-white/14 hover:text-white">Bayilik Başvurusu</button>
           </nav>
           <a href="https://b2b.duzmetal.com" target="_blank" rel="noreferrer" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#b51e1e] shadow-[0_10px_30px_rgba(0,0,0,0.16)] transition duration-300 hover:-translate-y-0.5 hover:bg-stone-100 hover:shadow-[0_12px_35px_rgba(0,0,0,0.2)]">
             B2B Giriş
@@ -392,6 +398,7 @@ function App() {
             <button type="button" onClick={() => handlePageChange('catalog')} className="transition hover:text-[#b51e1e]">Ürünlerimiz</button>
             <button type="button" onClick={() => handlePageChange('brands')} className="transition hover:text-[#b51e1e]">Markalarımız</button>
             <button type="button" onClick={() => handlePageChange('contact')} className="transition hover:text-[#b51e1e]">İletişim</button>
+            <button type="button" onClick={() => handlePageChange('dealer')} className="transition hover:text-[#b51e1e]">Bayilik Başvurusu</button>
             <a href="https://b2b.duzmetal.com" target="_blank" rel="noreferrer" className="rounded-full border border-[#b51e1e]/15 bg-[#b51e1e]/10 px-4 py-2 text-sm font-semibold text-[#a11818] transition hover:bg-[#b51e1e]/15">B2B Giriş</a>
           </div>
         </div>
