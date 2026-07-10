@@ -14,6 +14,7 @@ import { BrandsPage } from './components/BrandsPage'
 import { DealerApplicationPage } from './components/DealerApplicationPage'
 import { Section } from './components/Section'
 import { StatCard } from './components/StatCard'
+import { WhatsAppButton, SocialIcons } from './components/WhatsAppButton'
 
 interface ImageSliderProps {
   images: string[];
@@ -392,6 +393,7 @@ function App() {
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Düz Metal</p>
             <p className="mt-3 max-w-md leading-7">GÜÇLÜ STOK, TOPTAN SATIŞ, HIZLI TESLİMAT</p>
+            <SocialIcons />
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <a href="#kurumsal" className="transition hover:text-[#b51e1e]">Kurumsal</a>
@@ -404,6 +406,7 @@ function App() {
         </div>
         <p className="mx-auto mt-8 max-w-7xl text-xs uppercase tracking-[0.28em] text-stone-500">© 2026 Düz Metal. Tüm hakları saklıdır.</p>
       </footer>
+      <WhatsAppButton />
     </div>
   )
 }

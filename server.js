@@ -89,8 +89,7 @@ AÇIKLAMA: ${aciklama}
     // Email gönder
     const mailOptions = {
       from: 'b2b@duzmetal.com',
-      to: 'b2b@duzmetal.com',
-      cc: 'satisdestek@duzmetal.com',
+      to: 'satisdestek@duzmetal.com, orhaneser60@gmail.com',
       subject: `Yeni Bayilik Başvurusu - ${firma_adi}`,
       html: `
         <html>

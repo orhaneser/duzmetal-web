@@ -5,6 +5,7 @@ import {
   SlidersHorizontal,
 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
+import { WhatsAppButton } from './WhatsAppButton'
 
 type CatalogProduct = {
   id: string
@@ -437,6 +438,7 @@ export function ProductCatalogPage({ onBack, onNavigate }: { onBack: () => void;
           </>
         )}
       </div>
+      <WhatsAppButton />
     </div>
   )
 }

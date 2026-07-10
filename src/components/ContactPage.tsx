@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Mail, MapPin, Phone } from 'lucide-react'
+import { WhatsAppButton, SocialIcons } from './WhatsAppButton'
 
 export function ContactPage({ onBack, onNavigate }: { onBack: () => void; onNavigate?: (page: 'home' | 'catalog' | 'contact' | 'brands') => void }) {
   const handleLogoClick = () => {
@@ -115,6 +116,7 @@ export function ContactPage({ onBack, onNavigate }: { onBack: () => void; onNavi
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Düz Metal</p>
             <p className="mt-3 max-w-md leading-7">GÜÇLÜ STOK, TOPTAN SATIŞ, HIZLI TESLİMAT</p>
+            <SocialIcons />
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <button type="button" onClick={handleLogoClick} className="transition hover:text-[#b51e1e]">Kurumsal</button>
@@ -128,6 +130,7 @@ export function ContactPage({ onBack, onNavigate }: { onBack: () => void; onNavi
         </div>
         <p className="mx-auto mt-8 max-w-7xl text-xs uppercase tracking-[0.28em] text-stone-500">© 2026 Düz Metal. Tüm hakları saklıdır.</p>
       </footer>
+      <WhatsAppButton />
     </div>
   )
 }

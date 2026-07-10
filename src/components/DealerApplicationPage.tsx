@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle, AlertCircle, Loader } from 'lucide-react'
+import { WhatsAppButton, SocialIcons } from './WhatsAppButton'
 
 interface FormData {
   ad_soyad: string
@@ -479,6 +480,7 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#b51e1e]">Düz Metal</p>
             <p className="mt-3 max-w-md leading-7">GÜÇLÜ STOK, TOPTAN SATIŞ, HIZLI TESLİMAT</p>
+            <SocialIcons />
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <button type="button" onClick={handleLogoClick} className="transition hover:text-[#b51e1e]">Kurumsal</button>
@@ -493,6 +495,7 @@ export const DealerApplicationPage = ({ onBack, onNavigate }: { onBack: () => vo
         </div>
         <p className="mx-auto mt-8 max-w-7xl text-xs uppercase tracking-[0.28em] text-stone-500">© 2026 Düz Metal. Tüm hakları saklıdır.</p>
       </footer>
+      <WhatsAppButton />
     </div>
   )
 }
