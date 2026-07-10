@@ -217,7 +217,7 @@ function App() {
   }
 
   if (currentPage === 'dealer') {
-    return <DealerApplicationPage />
+    return <DealerApplicationPage onBack={() => handlePageChange('home')} onNavigate={handlePageChange} />
   }
 
   return (
